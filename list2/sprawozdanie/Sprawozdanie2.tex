@@ -19,10 +19,10 @@
 
 \subsection{Wstęp}
 Celem zadania 1. jest rozpatrzenie niezawodności sieci o modelu $S = <G, H>$ w czasie podzielonym na interwały. 
-Podstawowy model składa się z grafu \linebreak $G = <V, E>$ zwierającego 20 wierzchołków oznaczonych przez $v(i)$, dla \linebreak $i = 1,..20$, a zbiór $E$ zawiera 19 krawędzi $e(j,j+1)$, dla $j = 1, ...,19$. Zbiór $H$ zawiera funkcję niezawodości $h$ przyporządkowującą każdej krawędzi $e(j,k)$ ze zbioru $E$ wartość $0.95$ oznacząjącą prawdopodobieństwo nieuszkodzenia tego kanału komunikacyjnego w dowolnym interwale. 
+Podstawowy model składa się z grafu \linebreak $G = <V, E>$ zwierającego 20 wierzchołków oznaczonych przez $v(i)$, dla \linebreak $i = 1,..20$, a zbiór $E$ zawiera 19 krawędzi $e(j,j+1)$, dla $j = 1, ...,19$. Zbiór $H$ zawiera funkcję niezawodności $h$ przyporządkowującą każdej krawędzi $e(j,k)$ ze zbioru $E$ wartość $0.95$ oznaczającą prawdopodobieństwo nieuszkodzenia tego kanału komunikacyjnego w dowolnym interwale. 
 
 \subsection{Symulacja}
-W celu oszacowania niezawodności sieci posłużę się programem, korzystającym z metody Monte Carlo, napisanym w języku Java, z pomocą biblioteki JGraphT. W celu wizualizacj grafów posłuże sie narzędziem Graphviz. Symulacja będzie polegała na wykonaniu odpowiedniej liczby prób na danym grafie i porównaniu liczby prób udanych do liczby wszystkich. Pojedyncza próba będzie składać się z:
+W celu oszacowania niezawodności sieci posłużę się programem, korzystającym z metody Monte Carlo, napisanym w języku Java, z pomocą biblioteki JGraphT. W celu wizualizacji grafów posłużę się narzędziem Graphviz. Symulacja będzie polegała na wykonaniu odpowiedniej liczby prób na danym grafie i porównaniu liczby prób udanych do liczby wszystkich. Pojedyncza próba będzie składać się z:
 \begin{enumerate}
 \itemsep0em 
 \item Utworzenia grafu
@@ -127,13 +127,13 @@ W teście nr 4 korzystamy z modelu z poprzedniego testu z dodatkowymi dwoma poł
 
 \newpage
 \subsection{Omówienie wyników}
-Dla bardziej skomplikowanych sieci problemem jest analityczne policzenie niezawodności. Jednat dla sieci z testu nr 1 można obliczyć ją w prosty sposób. Sieć pozostaje spójna jeśli żaden z kanałów komunikacyjnych nie jest przerwany, czego prawdopodobieństwo wynosi $P = 0,95^{19} \approx 0.37735360$.
+Dla bardziej skomplikowanych sieci problemem jest analityczne policzenie niezawodności. Jednak dla sieci z testu nr 1 można obliczyć ją w prosty sposób. Sieć pozostaje spójna jeśli żaden z kanałów komunikacyjnych nie jest przerwany, czego prawdopodobieństwo wynosi $P = 0,95^{19} \approx 0.37735360$.
 
 Obliczone prawdopodobieństwo jest bardzo zbliżone do uzyskanego wyniku, a na dokładność wpływa między innymi jakość użytego generatora pseudolosowego.
 
-Jak można zauważyć, w teście nr 2, po dodaniu kanału pomiędzy wierzchołkami $1$ i $20$ prawdopodbieństwo znacząco wzrasta - wynika to z faktu, iż w modelu drugim po zniszczeniu jednego kanału komunikacyjnego sieć wciaż zachowuje spójność.
+Jak można zauważyć, w teście nr 2, po dodaniu kanału pomiędzy wierzchołkami $1$ i $20$ prawdopodobieństwo znacząco wzrasta - wynika to z faktu, iż w modelu drugim po zniszczeniu jednego kanału komunikacyjnego sieć wciąż zachowuje spójność.
 
-Podobnie w teście nr 3 i nr 4 dodawanie krawędzi zwiększa niezawodność sieci. W teście nr 4 na niezawodność sieci wpływa również to, które wierzchołki łączą wylosowane krawędzie - im większa odległość pomiędzy wolosowanymi wierzchołkami, tym większa niezawodność sieci.
+Podobnie w teście nr 3 i nr 4 dodawanie krawędzi zwiększa niezawodność sieci. W teście nr 4 na niezawodność sieci wpływa również to, które wierzchołki łączą wylosowane krawędzie - im większa odległość pomiędzy wylosowanymi wierzchołkami, tym większa niezawodność sieci.
 
 \newpage
 \section{Zadanie nr 2}
