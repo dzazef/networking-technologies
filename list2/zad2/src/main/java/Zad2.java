@@ -1,15 +1,42 @@
 import org.jgraph.graph.DefaultEdge;
+import org.jgrapht.Graph;
+import org.jgrapht.GraphPath;
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
+import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultDirectedWeightedGraph;
+import org.jgrapht.graph.DefaultUndirectedWeightedGraph;
+import org.jgrapht.io.DOTExporter;
+import org.jgrapht.io.GmlExporter;
+import org.jgrapht.io.GraphExporter;
 
+import java.io.*;
+import java.rmi.server.ExportException;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Set;
 
+class GraphPrinter {
+    public static void print(Graph<Integer, DefaultEdge> g) {
+        GraphExporter<Integer, DefaultEdge> exporter = new DOTExporter<>();
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter("graph.dot"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            exporter.exportGraph(g, writer);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
 class NetworkManager {
-    private DefaultDirectedWeightedGraph<Integer, DefaultEdge> g = new DefaultDirectedWeightedGraph<>(DefaultEdge.class);
-    private Integer[][] capacity = new Integer[10][10];
+    private DefaultUndirectedWeightedGraph<Integer, DefaultEdge> g = new DefaultUndirectedWeightedGraph<>(DefaultEdge.class);
     private int packageSize;
-    private Integer[][] flow = new Integer[10][10];
+    Integer[][] flow = new Integer[10][10];
+    private Integer[][] completeFlow = new Integer[10][10];
 
     NetworkManager() {
         for(int i=1; i<=10; i++) {
@@ -29,12 +56,12 @@ class NetworkManager {
         return packageSize;
     }
 
-    void setCapacity(int v1, int v2, Integer value) {
-        capacity[v1-1][v2-1] = value;
+    void setCapacity(int v1, int v2, double value) {
+        g.setEdgeWeight(v1, v2, value);
     }
 
-    Integer getCapacity(int v1, int v2) {
-        return capacity[v1-1][v2-1];
+    double getCapacity(int v1, int v2) {
+        return g.getEdgeWeight(g.getEdge(v1, v2));
     }
 
     void setFlow(int v1, int v2, int f) {
@@ -45,7 +72,7 @@ class NetworkManager {
         return flow[v1-1][v2-1];
     }
 
-    DefaultDirectedWeightedGraph<Integer, DefaultEdge> getGraph() {
+    DefaultUndirectedWeightedGraph<Integer, DefaultEdge> getGraph() {
         return this.g;
     }
 
@@ -60,6 +87,33 @@ class NetworkManager {
 
     void clearConnections() {
         g.removeAllEdges(g.edgeSet());
+    }
+
+    void printCapacity() {
+        System.out.println("----CAPACITY----");
+        System.out.println("--------------------");
+        DefaultEdge defaultEdge;
+
+        for (int v1=1; v1<=10; v1++) {
+            for (int v2=1; v2<=10; v2++) {
+                defaultEdge = g.getEdge(v1, v2);
+                if (defaultEdge == null) {
+                    System.out.print("X"+" ");
+                } else {
+                    System.out.print(g.getEdgeWeight(defaultEdge)+" ");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    void countCompleteFlow() {
+        DijkstraShortestPath<Integer, DefaultEdge> dijkstra = new DijkstraShortestPath<>(g);
+        for (int v1=1; v1<=10; v1++) {
+            for (int v2=1; v2<=10; v2++) {
+
+            }
+        }
     }
 }
 
@@ -163,10 +217,6 @@ class NetworkBuilder {
 
     }
 
-    private boolean checkIfConnected() {
-        return n.checkIfConnected();
-    }
-
     NetworkManager buildNetwork() {
         setNumberOfEdges();
         boolean connected; String answer;
@@ -188,11 +238,34 @@ class NetworkBuilder {
         setCapacity();
         return this.n;
     }
+
+    NetworkManager buildDefaultNetwork() {
+        NetworkManager nm = new NetworkManager();
+        nm.addEdge(1, 10);
+        nm.addEdge(5, 10);
+        nm.addEdge(2, 7);
+        for (int i=1; i<10; i++) {
+            nm.addEdge(i, i+1);
+            nm.setFlow(i, i+1, 10);
+            nm.setCapacity(i, i+1, 10);
+        }
+        nm.setPackageSize(255);
+        return nm;
+    }
 }
 
 public class Zad2 {
     public static void main(String[] args) {
         NetworkBuilder nb = new NetworkBuilder();
-        nb.buildNetwork();
+        NetworkManager nm = nb.buildDefaultNetwork();
+        nm.printCapacity();
+        GraphPrinter.print(nm.getGraph());
+        DijkstraShortestPath<Integer, DefaultEdge> dijkstra = new DijkstraShortestPath<>(nm.getGraph());
+        for (Integer i : dijkstra.getPath(1, 7).getVertexList()) {
+            System.out.println(i);
+        }
+        for (Integer i : dijkstra.getPath(4, 7).getVertexList()) {
+            System.out.println(i);
+        }
     }
 }
