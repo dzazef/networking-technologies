@@ -4,12 +4,12 @@ import java.util.Scanner;
 
 class NetworkBuilder {
 
-    private NetworkManager n;
+    private Network n;
     private Scanner s;
     private int edges;
 
     NetworkBuilder() {
-        this.n = new NetworkManager();
+        this.n = new Network(10);
         this.s = new Scanner(System.in);
     }
 
@@ -54,45 +54,24 @@ class NetworkBuilder {
     }
 
     private void setFlow() {
-        int v1, v2, packages;
+        int value;
         System.out.println("Setting numbers of packages sent between users: ");
-        for (DefaultEdge d : n.getEdgeSet()) {
-            v1 = n.getGraph().getEdgeSource(d);
-            v2 = n.getGraph().getEdgeTarget(d);
-            System.out.print("From client "+v1+" to client "+v2+": ");
-            do {
-                packages = s.nextInt();
-                if (packages<0) System.out.println("Incorrect value. Try again.");
-            } while (packages<0);
-            n.setFlow(v1, v2, packages);
-
-            v1 = n.getGraph().getEdgeTarget(d);
-            v2 = n.getGraph().getEdgeSource(d);
-            System.out.print("From client "+v1+" to client "+v2+": ");
-            do {
-                packages = s.nextInt();
-                if (packages<0) System.out.println("Incorrect value. Try again.");
-            } while (packages<0);
-            n.setFlow(v1, v2, packages);
+        for (int v1=1;v1<=10;v1++) {
+            for (int v2=1;v2<=10;v2++) {
+                System.out.print("From user "+v1+" to user "+v2+": ");
+                value = s.nextInt();
+                n.setFlow(v1, v2, value);
+            }
         }
     }
 
     private void setCapacity() {
         int v1, v2, capacity;
-        System.out.println("Setting max numbers of bytes sent between users: ");
+        System.out.println("Setting capacity: ");
         for (DefaultEdge d : n.getEdgeSet()) {
             v1 = n.getGraph().getEdgeSource(d);
             v2 = n.getGraph().getEdgeTarget(d);
-            System.out.print("From client "+v1+" to client "+v2+": ");
-            do {
-                capacity = s.nextInt();
-                if (capacity<0) System.out.println("Incorrect value. Try again.");
-            } while (capacity<0);
-            n.setCapacity(v1, v2, capacity);
-
-            v1 = n.getGraph().getEdgeTarget(d);
-            v2 = n.getGraph().getEdgeSource(d);
-            System.out.print("From client "+v1+" to client "+v2+": ");
+            System.out.print("On edge "+v1+" - "+v2+": ");
             do {
                 capacity = s.nextInt();
                 if (capacity<0) System.out.println("Incorrect value. Try again.");
@@ -102,7 +81,7 @@ class NetworkBuilder {
 
     }
 
-    NetworkManager buildNetwork() {
+    Network buildNetwork() {
         setNumberOfEdges();
         boolean connected; String answer;
         while(true) {
@@ -119,23 +98,25 @@ class NetworkBuilder {
             n.clearConnections();
         }
         setPackageSize();
-        setFlow();
         setCapacity();
+        setFlow();
+        n.countCompleteFlow();
+        n.countAverageDelay();
         return this.n;
     }
 
-    NetworkManager buildDefaultNetwork() {
-        NetworkManager nm = new NetworkManager();
-        nm.addEdge(1, 10);
-        nm.addEdge(5, 10);
-        nm.addEdge(2, 7);
+    Network buildDefaultNetwork() {
+        n.addEdge(1, 10);
+        n.setCapacity(1, 10, 20000);
         for (int i=1; i<10; i++) {
-            nm.addEdge(i, i+1);
-            nm.setCapacity(i, i+1, 20);
+            n.addEdge(i, i+1);
+            n.setCapacity(i, i+1, 20000);
         }
-        nm.setFlow(1, 7, 10);
-        nm.setFlow(1, 6, 10);
-        nm.setPackageSize(255);
-        return nm;
+        n.setFlow(1, 10, 1000);
+        n.setFlow(1, 2, 1000);
+        n.setPackageSize(20);
+        n.countCompleteFlow();
+        n.countAverageDelay();
+        return n;
     }
 }
