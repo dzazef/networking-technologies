@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 class Network {
+    private int vertexes;
     private DefaultUndirectedWeightedGraph<Integer, DefaultEdge> g = new DefaultUndirectedWeightedGraph<>(DefaultEdge.class);    //edge weight is capacity - C
     private int packageSize; //package size - M
     private Integer[][] N;//number of packages sent between users - N
@@ -15,10 +16,11 @@ class Network {
     private double T = 0;  //average delay - T
 
     Network(int size) {
-        for(int i=1; i<=size; i++) {
+        this.vertexes = size;
+        for(int i=1; i<=vertexes; i++) {
             g.addVertex(i);
         }
-        N = new Integer[size][size];
+        N = new Integer[vertexes][vertexes];
     }
 
     void addEdge(int v1, int v2) {
@@ -36,6 +38,10 @@ class Network {
 
     void setCapacity(int v1, int v2, double value) {
         g.setEdgeWeight(v1, v2, value);
+    }
+
+    void setCapacity(DefaultEdge edge, double value) {
+        g.setEdgeWeight(edge, value);
     }
 
     double getCapacity(int v1, int v2) {
@@ -70,8 +76,8 @@ class Network {
     void countCompleteFlow() {
         DijkstraShortestPath<Integer, DefaultEdge> dijkstra = new DijkstraShortestPath<>(g);
         Integer i;
-        for (int v1=1; v1<=10; v1++) {
-            for (int v2=1; v2<=10; v2++) {
+        for (int v1=1; v1<=vertexes; v1++) {
+            for (int v2=1; v2<=vertexes; v2++) {
                 i = N[v1-1][v2-1];
                 if (i!=null) {
                     for (DefaultEdge edge : dijkstra.getPath(v1, v2).getEdgeList()) {
@@ -84,8 +90,8 @@ class Network {
 
     void countAverageDelay() {
         double G = 0;
-        for (int v1=0; v1<10; v1++) {
-            for (int v2=0; v2<10; v2++) {
+        for (int v1=0; v1<vertexes; v1++) {
+            for (int v2=0; v2<vertexes; v2++) {
                 if (N[v1][v2]!=null) G+= N[v1][v2];
             }
         }
@@ -103,7 +109,7 @@ class Network {
 
 
     void printCompleteFlow() {
-        System.out.println("----COMPLETE FLOW----");
+        System.out.println("----COMPLETE FLOW(PACKAGES)----");
         System.out.println("--------------------");
         for (Map.Entry<DefaultEdge, Integer> m : A.entrySet()) {
             System.out.println(m.getValue()+" packages on edge "+g.getEdgeSource(m.getKey())+" - "+g.getEdgeTarget(m.getKey()));
@@ -111,7 +117,7 @@ class Network {
     }
 
     void printCapacity() {
-        System.out.println("----CAPACITY----");
+        System.out.println("----CAPACITY(BYTES)----");
         System.out.println("--------------------");
         for (DefaultEdge edge : g.edgeSet()) {
             System.out.println(g.getEdgeWeight(edge)+" capacity on edge "+g.getEdgeSource(edge)+" - "+g.getEdgeTarget(edge));
@@ -119,10 +125,10 @@ class Network {
     }
 
     void printFlow() {
-        System.out.println("----FLOW----");
+        System.out.println("----FLOW(PACKAGES)----");
         System.out.println("--------------------");
-        for (int v1=1; v1<=10; v1++) {
-            for (int v2=1; v2<=10; v2++) {
+        for (int v1=1; v1<=vertexes; v1++) {
+            for (int v2=1; v2<=vertexes; v2++) {
                 if (N[v1-1][v2-1] == null) {
                     System.out.print("X"+" ");
                 } else {
@@ -134,6 +140,8 @@ class Network {
     }
 
     void printAverageDelay() {
+        System.out.println("----AVERAGE DELAY(SECONDS)----");
+        System.out.println("--------------------");
         System.out.println(T);
     }
 }
