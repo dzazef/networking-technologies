@@ -64,7 +64,7 @@ W teście nr 1 korzystamy z modelu podstawowego, podanego we wstępie. Po wykona
 W teście nr 2 korzystamy z modelu podstawowego z dodatkowym połączeniem pomiędzy wierzchołkami 1 i 20 o niezawodności wynoszącej 0.95. Po wykonaniu symulacji uzyskujemy następujące wyniki:
 \begin{table}[h!]
 	\centering
-    \label{tab:table1}
+    \label{tab:table2}
     \begin{tabular}{|c|c|c|c|}
     		\multicolumn{4}{c}{Liczba prób}\\
     		\hline
@@ -86,7 +86,7 @@ W teście nr 2 korzystamy z modelu podstawowego z dodatkowym połączeniem pomi�
 W teście nr 3 korzystamy z modelu z poprzedniego test z dodatkowymi połączeniami pomiędzy wierzchołkami 1 i 10 oraz 5 i 15 o niezawodnościach wynoszących odpowiednio 0.8 i 0.7. Po wykonaniu symulacji uzyskujemy następujące wyniki:
 \begin{table}[h!]
 	\centering
-    \label{tab:table1}
+    \label{tab:table3}
     \begin{tabular}{|c|c|c|c|}
     		\multicolumn{4}{c}{Liczba prób}\\
     		\hline
@@ -108,7 +108,7 @@ W teście nr 3 korzystamy z modelu z poprzedniego test z dodatkowymi połączeni
 W teście nr 4 korzystamy z modelu z poprzedniego testu z dodatkowymi dwoma połączeniami, o niezawodności wynoszącej $0.4$, pomiędzy losowymi wierzchołkami. Po wykonaniu symulacji uzyskujemy następujące wyniki:
 \begin{table}[h!]
 	\centering
-    \label{tab:table1}
+    \label{tab:table4}
     \begin{tabular}{|c|c|c|c|}
     		\multicolumn{4}{c}{Liczba prób}\\
     		\hline
@@ -137,5 +137,58 @@ Podobnie w teście nr 3 i nr 4 dodawanie krawędzi zwiększa niezawodność siec
 
 \newpage
 \section{Zadanie nr 2}
+\subsection{Obliczanie średniego opóźnienia}
+W celu testowania sieci posłużyłem się programem napisanym w Javie przy użyciu biblioteki JGraphT. Program na wejście przyjmuje niezbędne dane takie jak: połączenia pomiędzy wierzchołkami, wielkość pakietu, oraz macierz natężeń strumienia pakietów. Program analizuje spójność sieci, oblicza funkcję przepływu oraz średnie opóźnienie pakietu ze wzoru:
+\begin{equation*}
+	T = \frac{1}{G} * \sum_e{\frac{a(e)}{\frac{c(e)}{m}-a(e)}}
+\end{equation*}
+W celu obliczenia funkcji przepływu, program szuka najkrótszej ścieżki pomiędzy wierzchołkami za pomocą algorytmu Dijkstry, a następnie liczy ilość pakietów przechodzących przez dany wierzchołek.
+
+
+\subsection{Przykładowy model sieci}
+W zadaniu posłużyłem się modelem sieci o topologii siatki zgodnie z poniższym schematem:
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.8\linewidth]{graph5.png}
+\end{figure}
+
+Wartość przesyłanego pakietu ustawiłem na $10B$.
+Dla podanego modelu sieci początkowo ustawiłem poniższą macierz natężeń (liczby pakietów):
+\begin{equation*}
+	N = [n(i,j)], \forall i,j; i \neq j: n(i,j)=1000
+\end{equation*}
+
+Przepustowość na kanałach komunikacyjnych wynosi:
+\begin{equation*}
+	\forall_{e\in E}: c(e) = 200000\frac{B}{s}
+\end{equation*}
+
+W celu policzenia funkcji przepływu, czyli faktycznej liczby pakietów wprowadzanej do poszczególnych kanałów komunikacyjnych posłużyłem się wcześniej wspomnianym programem. Otrzymałem następujący wynik:
+\begin{align*}
+	a(1, 2) &= 13000 \\
+	a(2, 3) &= 15000 \\
+	a(3, 4) &= 14000 \\
+	a(4, 5) &= 13000 \\
+	a(5, 6) &= 13000 \\
+	a(6, 7) &= 13000 \\
+	a(7, 8) &= 13000 \\
+	a(8, 9) &= 12000 \\
+	a(9, 10) &= 11000 \\
+	a(10, 1) &= 11000 \\
+	a(1, 6) &= 8000 \\
+	a(2, 7) &= 8000 \\
+	a(3, 8) &= 9000 \\
+	a(4, 9) &= 7000 \\
+	a(5, 10) &= 8000 
+\end{align*}
+Jak można zauważyć, ilość przesyłanych pakietów na żadnym kanale nie przekroczyła przepustowości (200000B = 20000 pakietów).
+
+Średnie opóźnienie pakietu w podanym modelu sieci wyniosło:
+\begin{equation*}
+	T = 0.000023 s
+\end{equation*}
+
+\subsection{Testowanie sieci}
+W celu testowania sieci posłużyłem się poprzednim programem rozbudowanym dodatkowo o testowanie nieuszkodzenia krawędzi. Program przyjmuje dodatkowo parametry p (prawdopodobieństwo nieuszkodzenia krawędzi) oraz tmax (maksymalne średnie opóźnienie pakietu). Po utworzeniu sieci program testuje spójność sieci, za pomocą sposobu opisanego w pierwszym zadaniu. Jeśli sieć pozostaje spójna, program testuje wysyłanie pakietów, oblicza całkowity przepływ i średnie opóźnienie. Pojedynczy test kończy się sukcesem, jeśli sieć pozostaje spójna, a średnie opóznienie jest mniejsze niż tmax.
 
 \end{document}
