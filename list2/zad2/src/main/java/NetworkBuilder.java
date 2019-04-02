@@ -10,14 +10,12 @@ class NetworkBuilder {
     private int vertexes;
 
     NetworkBuilder() {
-        this.n = new Network(10);
         this.s = new Scanner(System.in);
     }
 
     private void setSize() {
         System.out.print("Set number of users: ");
         this.vertexes = s.nextInt();
-        this.n = new Network(vertexes);
     }
 
     private void addEdge(int num) {
@@ -86,17 +84,19 @@ class NetworkBuilder {
         if (answer.equals("no") || answer.equals("n")) {
             for (int v1=1;v1<=vertexes;v1++) {
                 for (int v2=1;v2<=vertexes;v2++) {
-                    System.out.print("From user "+v1+" to user "+v2+": ");
-                    value = s.nextInt();
-                    n.setFlow(v1, v2, value);
+                    if(v1!=v2) {
+                        System.out.print("From user " + v1 + " to user " + v2 + ": ");
+                        value = s.nextInt();
+                        n.setFlow(v1, v2, value);
+                    }
                 }
             }
         } else {
             System.out.print("Set number of packages: ");
             value = s.nextInt();
-            for (int v1=1;v1<=10;v1++) {
-                for (int v2=1;v2<=10;v2++) {
-                    n.setFlow(v1, v2, value);
+            for (int v1=1;v1<=vertexes;v1++) {
+                for (int v2=1;v2<=vertexes;v2++) {
+                    if(v1!=v2) n.setFlow(v1, v2, value);
                 }
             }
         }
@@ -118,18 +118,42 @@ class NetworkBuilder {
             } while (capacity<0);
             n.setCapacity(v1, v2, capacity);
         }
-    } else {
-        System.out.print("Capacity: ");
-        double c = s.nextDouble();
-        for (DefaultEdge d : n.getEdgeSet()) {
-            n.setCapacity(d, c);
+        } else {
+            System.out.print("Capacity: ");
+            double c = s.nextDouble();
+            for (DefaultEdge d : n.getEdgeSet()) {
+                 n.setCapacity(d, c);
+            }
         }
     }
-}
+
+    private void setTMax() {
+        System.out.print("Set maximum delay: ");
+        n.setTmax(s.nextDouble());
+    }
+
+    private void setP() {
+        System.out.print("Set probability of not being damaged for edges: ");
+        n.setP(s.nextDouble());
+    }
+
+    Network buildTestNetwork() {
+        this.n = buildNetwork();
+        setP();
+        setTMax();
+        return n;
+    }
 
     Network buildNetwork() {
+        System.out.print("Do you want to use default network?(yes/no): ");
+        String answer;
+        answer = s.next();
+        if (answer.equals("yes") || answer.equals("y")) {
+            return buildDefaultNetwork();
+        }
         setSize();
-        boolean connected; String answer;
+        this.n = new Network((vertexes));
+        boolean connected;
         while(true) {
             setEdges();
             connected = n.checkIfConnected();
@@ -146,12 +170,10 @@ class NetworkBuilder {
         setPackageSize();
         setCapacity();
         setFlow();
-        n.countCompleteFlow();
-        n.countAverageDelay();
         return this.n;
     }
 
-    Network buildDefaultNetwork() {
+    private Network buildDefaultNetwork() {
         this.n = new Network(10);
         for (int i=1; i<10; i++) {
             n.addEdge(i, i+1);
@@ -170,10 +192,8 @@ class NetworkBuilder {
                 n.setFlow(i, j, 1000);
             }
         }
-        n.setFlow(1, 2, 5999);
+        n.setFlow(1, 2, 5900);
         n.setPackageSize(10);
-        n.countCompleteFlow();
-        n.countAverageDelay();
         return n;
     }
 }

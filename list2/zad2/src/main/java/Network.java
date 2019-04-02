@@ -3,17 +3,17 @@ import org.jgrapht.alg.connectivity.ConnectivityInspector;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultUndirectedWeightedGraph;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-class Network {
+class Network implements Cloneable {
     private int vertexes;
     private DefaultUndirectedWeightedGraph<Integer, DefaultEdge> g = new DefaultUndirectedWeightedGraph<>(DefaultEdge.class);    //edge weight is capacity - C
     private int packageSize; //package size - M
     private Integer[][] N;//number of packages sent between users - N
     private Map<DefaultEdge, Integer> A = new HashMap<>(); // edge - actual flow
     private double T = 0;  //average delay - T
+    private double p = 1;
+    private double tmax;
 
     Network(int size) {
         this.vertexes = size;
@@ -21,6 +21,10 @@ class Network {
             g.addVertex(i);
         }
         N = new Integer[vertexes][vertexes];
+    }
+
+    double getT() {
+        return T;
     }
 
     void addEdge(int v1, int v2) {
@@ -32,10 +36,6 @@ class Network {
         this.packageSize = p;
     }
 
-    public int getPackageSize() {
-        return packageSize;
-    }
-
     void setCapacity(int v1, int v2, double value) {
         g.setEdgeWeight(v1, v2, value);
     }
@@ -44,16 +44,8 @@ class Network {
         g.setEdgeWeight(edge, value);
     }
 
-    double getCapacity(int v1, int v2) {
-        return g.getEdgeWeight(g.getEdge(v1, v2));
-    }
-
     void setFlow(int v1, int v2, int f) {
         N[v1-1][v2-1] = f;
-    }
-
-    Integer getFlow(int v1, int v2) {
-        return N[v1-1][v2-1];
     }
 
     DefaultUndirectedWeightedGraph<Integer, DefaultEdge> getGraph() {
@@ -88,6 +80,11 @@ class Network {
         }
     }
 
+    void sendPackages() {
+        countCompleteFlow();
+        countAverageDelay();
+    }
+
     void countAverageDelay() {
         double G = 0;
         for (int v1=0; v1<vertexes; v1++) {
@@ -106,7 +103,6 @@ class Network {
         sum = sum * (1/G);
         T = sum;
     }
-
 
     void printCompleteFlow() {
         System.out.println("----COMPLETE FLOW(PACKAGES)----");
@@ -143,5 +139,32 @@ class Network {
         System.out.println("----AVERAGE DELAY(SECONDS)----");
         System.out.println("--------------------");
         System.out.println(T);
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        Object clone = super.clone();
+        Network n = new Network(vertexes);
+        for (DefaultEdge defaultEdge : getEdgeSet()) {
+            n.addEdge(g.getEdgeSource(defaultEdge), g.getEdgeTarget(defaultEdge));
+        }
+
+        return n;
+    }
+
+    void setP(double p) {
+        this.p = p;
+    }
+
+    void setTmax(double tmax) {
+        this.tmax = tmax;
+    }
+
+    double getP() {
+        return p;
+    }
+
+    double getTmax() {
+        return tmax;
     }
 }
