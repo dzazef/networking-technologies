@@ -160,8 +160,11 @@ class NetworkBuilder {
             if (!connected) {
                 System.out.print("Your graph is not connected. Do you want to rearrange the edges?(yes/no): ");
                 answer = s.next();
-                if (answer.equals("no") || answer.equals("n"))
-                    break;
+                if (answer.equals("no") || answer.equals("n")) {
+                    System.out.println("Couldn't create network");
+                    System.exit(1);
+                }
+
             } else {
                 break;
             }

@@ -150,7 +150,7 @@ public class Task1 {
     public static void main(String[] args) {
         System.out.println("--- Task1 ---");
         GraphTest graphTest = new GraphTest();
-        final int all = 1000000;
+        final int all = 1000;
         //TEST1
         new Thread(() -> {
             int c = graphTest.test1(all);
