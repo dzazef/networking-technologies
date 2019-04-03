@@ -192,7 +192,11 @@ class NetworkBuilder {
                 n.setFlow(i, j, 1000);
             }
         }
-        n.setFlow(1, 2, 5900);
+        n.setFlow(1, 2, 5999);
+        n.setFlow(2, 3, 5999);
+        n.setFlow(3, 4, 6999);
+        n.setFlow(4, 5, 7999);
+        n.setFlow(5, 6, 7999);
         n.setPackageSize(10);
         return n;
     }

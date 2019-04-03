@@ -10,7 +10,7 @@ class Network implements Cloneable {
     private DefaultUndirectedWeightedGraph<Integer, DefaultEdge> g = new DefaultUndirectedWeightedGraph<>(DefaultEdge.class);    //edge weight is capacity - C
     private int packageSize; //package size - M
     private Integer[][] N;//number of packages sent between users - N
-    private Map<DefaultEdge, Integer> A = new HashMap<>(); // edge - actual flow
+    Map<DefaultEdge, Integer> A = new HashMap<>(); // edge - actual flow
     private double T = 0;  //average delay - T
     private double p = 1;
     private double tmax;
@@ -81,11 +81,23 @@ class Network implements Cloneable {
     }
 
     void sendPackages() {
+        T = 0;
+        A.clear();
+        for (DefaultEdge edge : g.edgeSet()) {
+            A.put(edge, 0);
+        }
         countCompleteFlow();
         countAverageDelay();
     }
 
     void countAverageDelay() {
+        for (DefaultEdge edge : g.edgeSet()) {
+            if (A.get(edge)*packageSize>g.getEdgeWeight(edge)) {
+                this.T = -1;
+                return;
+            }
+        }
+
         double G = 0;
         for (int v1=0; v1<vertexes; v1++) {
             for (int v2=0; v2<vertexes; v2++) {
@@ -96,6 +108,7 @@ class Network implements Cloneable {
         double c, a, m;
         m = packageSize;
         for (DefaultEdge edge : g.edgeSet()) {
+            c = g.getEdgeWeight(edge);
             c = g.getEdgeWeight(edge);
             a = A.get(edge);
             sum += a/(c/m-a);

@@ -61,7 +61,7 @@ W teście nr 1 korzystamy z modelu podstawowego, podanego we wstępie. Po wykona
 
 \newpage
 \subsubsection{Test nr 2}
-W teście nr 2 korzystamy z modelu podstawowego z dodatkowym połączeniem pomiędzy wierzchołkami 1 i 20 o niezawodności wynoszącej 0.95. Po wykonaniu symulacji uzyskujemy następujące wyniki:
+W teście nr 2 korzystamy z modelu podstawowego z dodatkowym połączeniem pomiędzy wierzchołkami 1 i 20 o niezawodności wynoszteochęącej 0.95. Po wykonaniu symulacji uzyskujemy następujące wyniki:
 \begin{table}[h!]
 	\centering
     \label{tab:table2}
@@ -105,7 +105,7 @@ W teście nr 3 korzystamy z modelu z poprzedniego test z dodatkowymi połączeni
 
 \newpage
 \subsubsection{Test nr 4}
-W teście nr 4 korzystamy z modelu z poprzedniego testu z dodatkowymi dwoma połączeniami, o niezawodności wynoszącej $0.4$, pomiędzy losowymi wierzchołkami. Po wykonaniu symulacji uzyskujemy następujące wyniki:
+W teście nr 4 korzystamy z modelu z poprzedniego testu z dodatkowymi czterema połączeniami, o niezawodności wynoszącej $0.4$, pomiędzy losowymi wierzchołkami. Po wykonaniu symulacji uzyskujemy następujące wyniki:
 \begin{table}[h!]
 	\centering
     \label{tab:table4}
@@ -164,6 +164,7 @@ Przepustowość na kanałach komunikacyjnych wynosi:
 \end{equation*}
 
 W celu policzenia funkcji przepływu, czyli faktycznej liczby pakietów wprowadzanej do poszczególnych kanałów komunikacyjnych posłużyłem się wcześniej wspomnianym programem. Otrzymałem następujący wynik:
+\iffalse
 \begin{align*}
 	a(1, 2) &= 13000 \\
 	a(2, 3) &= 15000 \\
@@ -181,6 +182,12 @@ W celu policzenia funkcji przepływu, czyli faktycznej liczby pakietów wprowadz
 	a(4, 9) &= 7000 \\
 	a(5, 10) &= 8000 
 \end{align*}
+\fi
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.8\linewidth]{graph6.png}
+\end{figure}
+
 Jak można zauważyć, ilość przesyłanych pakietów na żadnym kanale nie przekroczyła przepustowości (200000B = 20000 pakietów).
 
 Średnie opóźnienie pakietu w podanym modelu sieci wyniosło:
@@ -188,7 +195,37 @@ Jak można zauważyć, ilość przesyłanych pakietów na żadnym kanale nie prz
 	T = 0.000023 s
 \end{equation*}
 
+\newpage
+W przypadku próby modyfikowania sieci tak, aby łączny przepływ na wierzchołkach zbliżał się do przepustowości, opóźnienie sieci znacząco wzrasta. Przykładowo, przy następujących wartościach łącznego przepływu:
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.8\linewidth]{graph7.png}
+\end{figure}
+
+średnie opóźnienie pakietu znacząco wzrasta do wartości $T = 0.769 s$
+
 \subsection{Testowanie sieci}
-W celu testowania sieci posłużyłem się poprzednim programem rozbudowanym dodatkowo o testowanie nieuszkodzenia krawędzi. Program przyjmuje dodatkowo parametry p (prawdopodobieństwo nieuszkodzenia krawędzi) oraz tmax (maksymalne średnie opóźnienie pakietu). Po utworzeniu sieci program testuje spójność sieci, za pomocą sposobu opisanego w pierwszym zadaniu. Jeśli sieć pozostaje spójna, program testuje wysyłanie pakietów, oblicza całkowity przepływ i średnie opóźnienie. Pojedynczy test kończy się sukcesem, jeśli sieć pozostaje spójna, a średnie opóznienie jest mniejsze niż tmax.
+W celu testowania sieci posłużyłem się poprzednim programem rozbudowanym dodatkowo o testowanie nieuszkodzenia krawędzi. Program przyjmuje dodatkowo parametry $p$ (prawdopodobieństwo nieuszkodzenia krawędzi) oraz tmax (maksymalne średnie opóźnienie pakietu). Po utworzeniu sieci program testuje spójność sieci, za pomocą sposobu opisanego w pierwszym zadaniu. Jeśli sieć pozostaje spójna, program testuje wysyłanie pakietów, oblicza całkowity przepływ i średnie opóźnienie. Pojedynczy test kończy się sukcesem, jeśli sieć pozostaje spójna, a średnie opóznienie jest mniejsze niż $tmax$.
+
+\newpage
+\subsection{Przykładowy test}
+W calu testowania przykładowej sieci posłużę się modelem sieci z zwiększoną liczbą pakietów z poprzedniego zadania. Wartość średniego opóżnienia dla podanego modelu wyniosła $T = 0,769 s$. Doświadczenia wykonuję dla 100000 testów. Wyniki doświadczenia umieszczam w poniższej tabeli:
+
+\begin{table}[h!]
+	\centering
+    \label{tab:table5}
+    \begin{tabular}{|c|c|c|c|}
+    		\hline
+      	P & 1 & 0.95 & 0.50\\
+      	\hline
+      	TMax & 0.77 & 0.77 & 0.77\\
+      	\hline
+      	Niezawodność & 1 & 0.1439 & 0.0002\\
+		\hline
+    \end{tabular}
+\end{table}
+
+W powyższym modelu łączny przepływ był bardzo zblizony do przpustowości sieci. Oznacza to, że w przypadku przerwania chociaż jednego węzła komunikacyjnego istnieje bardzo duże prawdopodbieństwo, że sieć nie będzie potafiła obsłużyć użytkowników, co można zauważyć w powyższej tabeli - wraz z zmniejszaniem prawdopobdobieństwa nieuszkodzenia kanłów komunikacyjnych niezawodność sieci znacząco się zmniejsza.
 
 \end{document}

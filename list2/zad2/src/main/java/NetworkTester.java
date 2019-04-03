@@ -30,6 +30,8 @@ public class NetworkTester {
 
     double testNetwork(int num) {
         int counter = 0;
+        n.sendPackages();
+        n.sendPackages();
         Map<Pair, Double> weightMap = new HashMap<>();
         Set<Pair> pairSet = new HashSet<>();
         Set<DefaultEdge> defaultEdgeSet = new HashSet<>();
@@ -47,9 +49,11 @@ public class NetworkTester {
             }
             n.getGraph().removeAllEdges(defaultEdgeSet);
             if (n.checkIfConnected()) {
-                n.countCompleteFlow();
-                n.countAverageDelay();
-                if( n.getT() < n.getTmax()) {
+                n.sendPackages();
+                System.out.println(n.getT());
+                System.out.println(n.getGraph());
+                System.out.println(n.A);
+                if( n.getT() < n.getTmax() && n.getT()>0) {
                     counter++;
                 }
             }
