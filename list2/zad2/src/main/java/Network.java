@@ -65,7 +65,7 @@ class Network implements Cloneable {
         g.removeAllEdges(g.edgeSet());
     }
 
-    void countCompleteFlow() {
+    private void countCompleteFlow() {
         DijkstraShortestPath<Integer, DefaultEdge> dijkstra = new DijkstraShortestPath<>(g);
         Integer i;
         for (int v1=1; v1<=vertexes; v1++) {
@@ -90,7 +90,7 @@ class Network implements Cloneable {
         countAverageDelay();
     }
 
-    void countAverageDelay() {
+    private void countAverageDelay() {
         for (DefaultEdge edge : g.edgeSet()) {
             if (A.get(edge)*packageSize>g.getEdgeWeight(edge)) {
                 this.T = -1;
@@ -108,7 +108,6 @@ class Network implements Cloneable {
         double c, a, m;
         m = packageSize;
         for (DefaultEdge edge : g.edgeSet()) {
-            c = g.getEdgeWeight(edge);
             c = g.getEdgeWeight(edge);
             a = A.get(edge);
             sum += a/(c/m-a);
