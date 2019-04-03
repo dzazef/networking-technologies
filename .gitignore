@@ -26,7 +26,6 @@ hs_err_pid*
 # TeX files
 *.gz
 *.aux
-*.pdf
 
 # Dolphin files
 .directory
