@@ -9,7 +9,7 @@ class Network implements Cloneable {
     private int vertexes;
     private DefaultUndirectedWeightedGraph<Integer, DefaultEdge> g = new DefaultUndirectedWeightedGraph<>(DefaultEdge.class);    //edge weight is capacity - C
     private int packageSize; //package size - M
-    private Integer[][] N;//number of packages sent between users - N
+    Integer[][] N;//number of packages sent between users - N
     Map<DefaultEdge, Integer> A = new HashMap<>(); // edge - actual flow
     private double T = 0;  //average delay - T
     private double p = 1;
