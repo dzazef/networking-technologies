@@ -50,9 +50,9 @@ public class NetworkTester {
             n.getGraph().removeAllEdges(defaultEdgeSet);
             if (n.checkIfConnected()) {
                 n.sendPackages();
-                System.out.println(n.getT());
-                System.out.println(n.getGraph());
-                System.out.println(n.A);
+//                System.out.println(n.getT());
+//                System.out.println(n.getGraph());
+//                System.out.println(n.A);
                 if( n.getT() < n.getTmax() && n.getT()>0) {
                     counter++;
                 }
