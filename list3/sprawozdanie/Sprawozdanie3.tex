@@ -1,0 +1,89 @@
+\documentclass[titlepage]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{polski}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{listings}
+\graphicspath{ {./graphics/} }
+\title{Sprawozdanie 3}
+\date{2019-04-20}
+\author{Józef Piechaczek}
+
+\begin{document}
+
+\pagenumbering{gobble}
+\maketitle
+\newpage
+\pagenumbering{arabic}
+
+\section{Zadanie 1}
+Celem zadania 1 jest napisanie programu ramkującego zgodnie z zasadą "rozpychania bitów" oraz weryfikującego poprawność ramki metodą CRC. Program pobiera z pliku testowego ciąg złożony ze znaków '0' i '1', który symuluje strumień bitów i tworzy na jego podstawie ramki, które następnie zapisuje do pliku wyjściowego. Nazwy plików wejściowych i wyjściowych przyjmowane są jako argumenty wywołania programu.
+
+Algorytm zamieniania strumienia bitów na ramki:
+\begin{enumerate}
+\itemsep0em
+\item Pobranie fragmentu strumienia bitów
+\item Obliczenie sumy kontrolnej CRC
+\item Konkatenacja fragmentu i sumy CRC
+\item Dodanie wartości "0" po każdym ciągu "011111"
+\item Dodanie sekwencji "01111110" na początku i końcu ramki
+\end{enumerate}
+
+Program obsługuje również procedurę odwrotną, czyli zamianę ramek na tekst wyjściowy.
+
+Algorytm zamieniania ramek na strumień bitów:
+\begin{enumerate}
+\itemsep0em
+\item Pobranie kolejnej ramki
+\item Odnalezienie początku i końca wiadomości na podstawie ułożenia sekwencji "01111110"
+\item Usunięcie wartości "0" po każdym ciągu "011111"
+\item Oddzielenie pola CRC od wiadomości
+\item Obliczenie sumy CRC dla uzyskanej wiadomości i porównanie z podanym CRC
+\item Zwrócenie wiadomości, jeśli sumy CRC się zgadzają, lub błędu, dla różnych sum kontrolnych
+\end{enumerate}
+
+\subsection{Przykład 1}
+Umieśćmy w pliku wejściowym następujący ciąg bitów:
+\begin{equation*}
+011111101010000111110111
+\end{equation*}
+Po zamienieniu wiadomości na ramki uzyskujemy następujący tekst
+\begin{equation*}
+01111110\;011111\textbf{0}10101000011111\textbf{0}0111\;10001110100010100000100110100101\;01111110
+\end{equation*}
+gdzie 
+\begin{itemize}
+\itemsep0em
+\item pierwsza i ostatnia część to sekwencje oddzielające
+\item druga część to wiadomość z zaznaczonymi dodatkowymi bitami
+\item trzecia część to kod CRC
+\end{itemize}
+Powyższy tekst zostaje umieszczony w pliku wynikowym.
+
+W celu przetestowanie poprawności ramkowania posłużę się metodą odwrotną - zamieniającą ramki z poprzedniego pliku wyjściowego na źródłowy strumień bitów i zapisującą do poprzedniego pliku wejściowego. Wartość po wykonaniu operacji odwrotnej jest identyczna do wartości sprzed ramkowania.
+
+\subsection{Przykład 2}
+W przykładzie drugim posłużę się ciągiem bitów z poprzedniego podpunktu. Uruchamiam program tworzący ramki na postawie strumienia bitów. W pliku wyjściowym umieszczona zostaje następująca ramka z wiadomością:
+\begin{equation*}
+01111110\;01111101010100001111100111\;10001110100010100000100110100101\;01111110
+\end{equation*}
+Zamieniam kilka bitów w części zawierającej sumy kontrolne CRC:
+\begin{equation*}
+01111110\;01111101010100001111100111\;100011101000101\textbf{11111}100110100101\;01111110
+\end{equation*}
+Podczas uruchamiania programu uzyskuję następujący rezultat:
+\begin{lstlisting}
+Exception in thread "main" exceptions.IncorrectCRCException
+	at crc.Decoder.fromFrame(Decoder.kt:19)
+	at crc.Decoder.decodeMessage(Decoder.kt:25)
+	at Zad1Kt.decode(Zad1.kt:33)
+	at Zad1Kt.main(Zad1.kt:38)
+\end{lstlisting}
+Wyjątek oznacza że sumy kontrolne nie są równe, co informuje o niezamierzonej zmianie bitów.
+
+
+
+
+
+
+\end{document}
