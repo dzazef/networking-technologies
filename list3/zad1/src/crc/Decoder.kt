@@ -1,14 +1,11 @@
 package crc
 
 import CRC_SIZE
-import ESCAPE_AFTER
-import ESCAPE_SYMBOL
 import TERMINATE_SEQ
-import exceptions.CRC16NotFoundException
 import exceptions.IncorrectCRCException
-import exceptions.MessageNotFoundException
 import exceptions.TerminateSequenceNotFoundException
-import getCRC
+import getCRC16
+import getCRC32
 import substringIndex
 
 class Decoder {
@@ -19,7 +16,7 @@ class Decoder {
         message = message.replace("0111110", "011111")
         val crc = message.substring(message.length-CRC_SIZE, message.length)
         message = message.removeSuffix(crc)
-        if (getCRC(message) != crc) throw IncorrectCRCException()
+        if (getCRC32(message) != crc) throw IncorrectCRCException()
         return message
     }
 
@@ -40,6 +37,6 @@ class Decoder {
 //            message = message.removeRange(escapeIndex + ESCAPE_AFTER.length, escapeIndex + ESCAPE_AFTER.length+ ESCAPE_SYMBOL.length)
 //            escapeIndex = message.substring(escapeIndex + ESCAPE_AFTER.length).substringIndex(ESCAPE_AFTER + ESCAPE_SYMBOL)
 //        }
-//        if (getCRC(message) != crc) throw IncorrectCRCException()
+//        if (getCRC16(message) != crc) throw IncorrectCRCException()
 //        return message
 //    }

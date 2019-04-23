@@ -1,4 +1,5 @@
 import crc.CRC16
+import java.util.zip.CRC32
 
 //UTILS
 fun String.removeFirst(): String {
@@ -22,7 +23,11 @@ fun String.substringIndex(sub : String, beginIdx: Int) : Int? {
     return null
 }
 
-fun getCRC(message: String): String {
+fun getCRC16(message: String): String {
     val crc16Binary = Integer.toBinaryString(CRC16().also { it.update(message.toByteArray()) }.value.toInt())
-    return "${"0".repeat(CRC_SIZE-crc16Binary.length)}$crc16Binary"
+    return "${"0".repeat(16-crc16Binary.length)}$crc16Binary"
+}
+fun getCRC32(message: String): String {
+    val crc32Binary = Integer.toBinaryString(CRC32().also { it.update(message.toByteArray()) }.value.toInt())
+    return "${"0".repeat(32-crc32Binary.length)}$crc32Binary"
 }

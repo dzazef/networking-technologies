@@ -1,5 +1,6 @@
 package readers
 
 interface Reader {
-    fun read(): String
+    fun readString(): String
+    fun readList(): List<String>
 }

@@ -1,6 +1,7 @@
 import crc.Coder
 import crc.Decoder
 import readers.FileReader
+import writers.FileWriter
 
 fun checkParameters(args: Array<String>) {
     if (args.size != 2) {
@@ -10,14 +11,8 @@ fun checkParameters(args: Array<String>) {
     }
 }
 
-fun wrongCRCExample() {
-
-}
-
-fun main(args : Array<String>) {
-//    println("0111110".replace("011111", "0111110").replace("0111110", "011111"))
-    checkParameters(args)
-    val message = FileReader(args[0]).read()
+fun testAndPrintToSystemOut(args: Array<String>) {
+    val message = FileReader(args[0]).readString()
     println("MESSAGE")
     println(message)
     val framedMessage = Coder().codeMessage(message)
@@ -25,4 +20,22 @@ fun main(args : Array<String>) {
     framedMessage.forEach { println(it) }
     println("DEFRAMED_MESSAGE")
     println(Decoder().decodeMessage(framedMessage))
+}
+
+fun code(args: Array<String>) {
+    checkParameters(args)
+    val message = FileReader(args[0]).readString()
+    val framedMessage = Coder().codeMessage(message)
+    FileWriter(args[1]).write(framedMessage)
+}
+
+fun decode(args: Array<String>) {
+    checkParameters(args)
+    val frameList = FileReader(args[1]).readList()
+    val message = Decoder().decodeMessage(frameList)
+    FileWriter(args[0]).write(message)
+}
+
+fun main(args : Array<String>) {
+    decode(args)
 }
