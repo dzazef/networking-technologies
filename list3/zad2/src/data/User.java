@@ -1,16 +1,18 @@
 package data;
 
 import simulator.Direction;
+import simulator.EthernetSimulator;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User extends Thread {
     private String ID;
     private List<Package> packageList;
+    private int index;
+    private EthernetSimulator ethernet;
 
     User(String id) {
-        //TODO: User as thread?
         this.ID = id;
         packageList = new ArrayList<>();
     }
@@ -26,10 +28,17 @@ public class User {
         return new Data(getID(), direction);
     }
 
+    @Override
+    public void run() {
+
+    }
+
+    @Deprecated
     public void createPackage(int size) {
         packageList.add(new Package(ID, size));
     }
 
+    @Deprecated
     public boolean dataAvailable() {
         if (packageList.size() > 0) {
             boolean dataAvailable = packageList.get(0).dataAvailable();

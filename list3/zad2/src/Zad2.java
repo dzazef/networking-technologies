@@ -22,8 +22,8 @@ public class Zad2 {
 
         marzena.createPackage(2);
         katarzyna.createPackage(2);
-        grazyna.createPackage(10);
+        grazyna.createPackage(100);
 
-        ethernetSimulator.createEthernet();
+        ethernetSimulator.start();
     }
 }
