@@ -1,29 +1,22 @@
-import data.User;
-import data.UserFactory;
+import simulator.User2;
+import exceptions.ChangedChainWhileRunningException;
 import exceptions.IncorrectUserIndexException;
 import parameters.Parameters;
-import simulator.EthernetSimulator;
+import simulator.Ethernet;
+import ticker.ThreadChain;
+import ticker.Ticker;
 
 public class Zad2 {
-    public static void main(String[] args) {
-        EthernetSimulator ethernetSimulator = new EthernetSimulator(Parameters.ETHERNET_SIZE);
-
-        User marzena = UserFactory.getUser();
-        User katarzyna = UserFactory.getUser();
-        User grazyna = UserFactory.getUser();
-
-        try {
-            ethernetSimulator.addUser(10, marzena);
-            ethernetSimulator.addUser(40, katarzyna);
-            ethernetSimulator.addUser(25, grazyna);
-        } catch (IncorrectUserIndexException e) {
-            e.printStackTrace();
-        }
-
-        marzena.createPackage(2);
-        katarzyna.createPackage(2);
-        grazyna.createPackage(100);
-
-        ethernetSimulator.start();
+    public static void main(String[] args) throws ChangedChainWhileRunningException, IncorrectUserIndexException {
+        ThreadChain ticker = new Ticker(null, Parameters.DELAY_MILLISECONDS);
+        Ethernet ethernet = new Ethernet(ticker, Parameters.ETHERNET_SIZE);
+        ThreadChain user = new User2(ethernet, "A", Parameters.ETHERNET_SIZE/4);
+        ThreadChain user2 = new User2(ethernet, "B", 3*Parameters.ETHERNET_SIZE/4);
+//        ThreadChain user3 = new User2(ethernet, "C", Parameters.ETHERNET_SIZE/2);
+        ticker.start();
+        ethernet.start();
+        user.start();
+        user2.start();
+//        user3.start();
     }
 }

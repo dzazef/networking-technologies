@@ -1,4 +1,4 @@
-package simulator;
+package data;
 
 public enum Direction {
     LEFT, RIGHT

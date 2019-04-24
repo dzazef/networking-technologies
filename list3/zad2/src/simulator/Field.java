@@ -1,73 +1,77 @@
 package simulator;
 
-import data.Data;
+import data.Direction;
+import data.Frame;
+import data.JamFrame;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Field {
-    private List<Data> dataList;
+    private List<Frame> frameList;
 
     Field() {
-        dataList = new ArrayList<>();
+        frameList = new ArrayList<>();
     }
 
-    void addData(Data data) {
-        dataList.add(data);
+    void addData(Frame frame) {
+        frameList.add(frame);
     }
 
-    void removeData(Data data) {
-        dataList.remove(data);
+    void removeData(Frame frame) {
+        frameList.remove(frame);
     }
 
-    void removeMultipleData(List<Data> data) {
-        dataList.removeAll(data);
+    void removeMultipleData(List<Frame> data) {
+        frameList.removeAll(data);
     }
 
-    List<Data> getDataList() {
-        return dataList;
+    List<Frame> getFrameList() {
+        return frameList;
     }
 
     int getSize() {
-        return dataList.size();
+        return frameList.size();
     }
 
-    Data getFirst() {
-        return dataList.get(0);
+    Frame getFirst() {
+        return frameList.get(0);
     }
 
     boolean checkIfEqual() {
         boolean equal = true;
         for (int i = 1; i < getSize() && equal; i++) {
-            if (!dataList.get(i - 1).getUser().equals(dataList.get(i).getUser())) {
+            if (!frameList.get(i - 1).getUser().equals(frameList.get(i).getUser())) {
                 equal = false;
             }
         }
         return equal;
     }
 
-    void checkCollision() {
-        if (!checkIfEqual()) {
-            for (Data data : dataList) {
-                data.setUser("X");
+    boolean isJammed() {
+        boolean jammed = false;
+        for (Frame frame : frameList) {
+            if (frame instanceof JamFrame) {
+                jammed = true;
             }
         }
+        return jammed;
     }
 
     void clear() {
-        dataList.clear();
+        frameList.clear();
     }
 
-    List<Data> getAll(Direction direction) {
-        List<Data> result = new ArrayList<>();
-        for (Data data : dataList) {
-            if (data.getDirection() == direction) result.add(data);
+    List<Frame> getAll(Direction direction) {
+        List<Frame> result = new ArrayList<>();
+        for (Frame frame : frameList) {
+            if (frame.getDirection() == direction) result.add(frame);
         }
         return result;
     }
 
-    public void addMultipleData(List<Data> toAdd) {
-        dataList.addAll(toAdd);
+    public void addMultipleData(List<Frame> toAdd) {
+        frameList.addAll(toAdd);
     }
 }
 

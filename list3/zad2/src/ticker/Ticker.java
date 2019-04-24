@@ -1,29 +1,31 @@
 package ticker;
 
-public class Ticker extends Thread {
-    private final long milliSeconds;
-    private boolean running = true;
+public class Ticker extends ThreadChain {
+    private final long millis;
 
-    public Ticker(long milliSeconds) {
-        super();
-        this.milliSeconds = milliSeconds;
+    public Ticker(Thread previous, long millis) {
+        super(previous);
+        this.millis = millis;
     }
 
     @Override
-    public void run() {
-        while(running) {
-            try {
-                Thread.sleep(milliSeconds);
-                synchronized (this) {
-                    notifyAll();
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+    protected void doStuff() {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
-
-    public void switchState() {
-        this.running = !this.running;
-    }
+//    @Override
+//    public void run() {
+//        running = true;
+//        while(running) {
+//            System.out.println("Ticker1");
+//            notifyNext();
+//            System.out.println("Ticker2");
+//            waitForPrevious();
+//            System.out.println("Ticker3");
+//            doStuff();
+//        }
+//    }
 }
