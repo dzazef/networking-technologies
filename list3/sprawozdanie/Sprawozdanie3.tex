@@ -89,13 +89,14 @@ Możliwa jest sytuacja, gdy dwie lub więcej stacji zaczną transmisję jednocze
 \[   
 T = 
      \begin{cases}
-       t * 2^k &\quad\text{, gdy }1 \leq k \leq 10\\
-       t * 2^{10} &\quad\text{, gdy }10 \leq k \leq 16\\
+       t * R(2^k) &\quad\text{, gdy }1 \leq k \leq 10\\
+       t * R(2^{10}) &\quad\text{, gdy }10 \leq k \leq 16\\
      \end{cases}
 \]
 gdzie
 \begin{itemize}
 \itemsep0em
+\item $R(x)$ - losowa liczba naturalna z zakresu $[0, x)$
 \item $k$ - numer kolizji
 \item $t$ - czas propagacji pakietu
 \end{itemize}
