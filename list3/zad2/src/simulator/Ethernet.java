@@ -60,7 +60,7 @@ public class Ethernet extends ThreadChain {
     }
 
     @Override
-    public void doStuff() {
+    public void task() {
         printEthernet();
         moveLeft();
         moveRight();
@@ -84,23 +84,8 @@ public class Ethernet extends ThreadChain {
         ethernet[idx].addData(new Frame(username, Direction.RIGHT));
     }
 
-
     public void insertNewJamFrames(int idx, String username) {
         ethernet[idx].addData(new JamFrame(username, Direction.LEFT));
         ethernet[idx].addData(new JamFrame(username, Direction.RIGHT));
     }
-
-
-//    @Override
-//    public void run() {
-//        running = true;
-//        while(running) {
-//            System.out.println("Ethernet1");
-//            notifyNext();
-//            System.out.println("Ethernet2");
-//            waitForPrevious();
-//            System.out.println("Ethernet3");
-//            doStuff();
-//        }
-//    }
 }

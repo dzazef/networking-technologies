@@ -30,7 +30,7 @@ public abstract class ThreadChain extends Thread {
         }
     }
 
-    protected abstract void doStuff();
+    protected abstract void task();
 
     @Override
     public void run() {
@@ -43,7 +43,7 @@ public abstract class ThreadChain extends Thread {
         while(running) {
             notifyNext();
             waitForPrevious();
-            doStuff();
+            task();
         }
     }
 

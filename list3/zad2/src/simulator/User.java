@@ -9,7 +9,7 @@ import java.util.Random;
 import static parameters.Parameters.DELAY_MILLISECONDS;
 import static parameters.Parameters.PACKAGE_SIZE;
 
-public class User2 extends ThreadChain {
+public class User extends ThreadChain {
     private final String name;
     private final Ethernet ethernet;
     private final int ethernetIndex;
@@ -18,7 +18,7 @@ public class User2 extends ThreadChain {
     private int multiplier = 1;
     private int fullMultiplier = 0;
 
-    public User2(Ethernet ethernet, String name, int ethernetIndex) throws IncorrectUserIndexException {
+    public User(Ethernet ethernet, String name, int ethernetIndex) throws IncorrectUserIndexException {
         super(ethernet);
         this.ethernet = ethernet;
         this.name = name;
@@ -73,7 +73,9 @@ public class User2 extends ThreadChain {
     }
 
     @Override
-    protected void doStuff() {
+    protected void task() {
+//        System.err.println("name "+name+" frame "+frame+" collision "+collision+" multiplier "+multiplier+" multiplierF "+fullMultiplier);
+
         if (collision && frame==0) stopCollisionManager();
 
         if (checkCollision()) {
@@ -146,7 +148,7 @@ public class User2 extends ThreadChain {
 
 
 //    @Override
-//    protected void doStuff() {
+//    protected void task() {
 ////        System.err.println("name "+name+" frames "+frames+" jam "+jam+" skip "+skip+" multiplier "+multiplier+" cde enabled "+collisionDetectionEnabled);
 //        if (skip > 0) {
 //            skip--;
@@ -195,10 +197,10 @@ public class User2 extends ThreadChain {
 //        while(running) {
 //            System.out.println("User1");
 //            notifyNext();
-//            System.out.println("User2");
+//            System.out.println("User");
 //            waitForPrevious();
 //            System.out.println("User3");
-//            doStuff();
+//            task();
 //        }
 //    }
 }

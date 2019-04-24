@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c8d9f578-4c75-4a54-b17c-2ee00c431a6c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/Task1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Task1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sprawozdanie/Sprawozdanie2.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../sprawozdanie/Sprawozdanie2.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sprawozdanie/Sprawozdanie2.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../sprawozdanie/Sprawozdanie2.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../zad2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../zad2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../zad2/src/main/java/NetworkBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/../zad2/src/main/java/NetworkBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../zad2/src/main/java/NetworkTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/../zad2/src/main/java/NetworkTester.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -23,8 +25,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Task1.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="70" lean-forward="true" selection-start-line="70" selection-end-line="70" />
+            <state relative-caret-position="748">
+              <caret line="70" selection-start-line="70" selection-end-line="70" />
             </state>
           </provider>
         </entry>
@@ -141,15 +143,17 @@
       <workItem from="1554161629435" duration="1686000" />
       <workItem from="1554197187792" duration="1230000" />
       <workItem from="1554241811248" duration="1821000" />
-      <workItem from="1554305017775" duration="926000" />
+      <workItem from="1554305017775" duration="2104000" />
+      <workItem from="1554898569497" duration="928000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28567000" />
+    <option name="totallyTimeSpent" value="30673000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="26" y="0" width="1898" height="1084" extended-state="6" />
+    <frame x="30" y="0" width="1890" height="1080" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.47362638" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -158,10 +162,9 @@
       <window_info id="UI Designer" order="4" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Statistic" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.28046218" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.28256303" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -172,6 +175,7 @@
       <window_info anchor="bottom" id="Terminal" order="10" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.32969433" />
+      <window_info anchor="bottom" id="Statistic" order="13" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -211,8 +215,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Task1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="70" lean-forward="true" selection-start-line="70" selection-end-line="70" />
+        <state relative-caret-position="748">
+          <caret line="70" selection-start-line="70" selection-end-line="70" />
         </state>
       </provider>
     </entry>

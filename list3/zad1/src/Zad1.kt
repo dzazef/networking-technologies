@@ -37,5 +37,5 @@ fun decode(args: Array<String>) {
 }
 
 fun main(args : Array<String>) {
-    decode(args)
+    code(args)
 }

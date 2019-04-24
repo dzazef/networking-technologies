@@ -2,9 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{polski}
 \usepackage{amsmath}
-\usepackage{graphicx}
 \usepackage{listings}
-\graphicspath{ {./graphics/} }
 \title{Sprawozdanie 3}
 \date{2019-04-20}
 \author{Józef Piechaczek}
@@ -87,6 +85,7 @@ Celem zadania 2 jest napisanie symulacji metody dostępu do medium transmisyjneg
 W danym interwale stacje sprawdzają, czy jest możliwość wysyłania ramek - jeśli łącze w danym miejscu jest wolne, stacje z określonym prawdopodobieństwem mogą zacząć transmisję, jeśli łącze jest zajęte, stacje milczą.
 
 Możliwa jest sytuacja, gdy dwie lub więcej stacji zaczną transmisję jednocześnie. Wtedy każda ze stacji, po zauważeniu nieprawidłowych pakietów, wstrzymuje transmisję na okres czasu propagacji jednego pakietu. Po upływie tego czasu każda ze stacji losuje szczeliny czasowe zgodnie ze wzorem 
+\newpage
 \[   
 T = 
      \begin{cases}
@@ -98,6 +97,7 @@ gdzie
 \begin{itemize}
 \itemsep0em
 \item $k$ - numer kolizji
+\item $t$ - czas propagacji pakietu
 \end{itemize}
 
 

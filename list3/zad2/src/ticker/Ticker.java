@@ -9,23 +9,11 @@ public class Ticker extends ThreadChain {
     }
 
     @Override
-    protected void doStuff() {
+    protected void task() {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
-//    @Override
-//    public void run() {
-//        running = true;
-//        while(running) {
-//            System.out.println("Ticker1");
-//            notifyNext();
-//            System.out.println("Ticker2");
-//            waitForPrevious();
-//            System.out.println("Ticker3");
-//            doStuff();
-//        }
-//    }
 }
