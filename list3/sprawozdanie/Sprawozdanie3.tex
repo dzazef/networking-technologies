@@ -81,6 +81,26 @@ Exception in thread "main" exceptions.IncorrectCRCException
 \end{lstlisting}
 Wyjątek oznacza że sumy kontrolne nie są równe, co informuje o niezamierzonej zmianie bitów.
 
+\section{Zadanie 2}
+Celem zadania 2 jest napisanie symulacji metody dostępu do medium transmisyjnego CSMA/CD. Łącze realizowane jest za pomocą tablicy. Czas działania symulatora podzielony jest na interwały o określonej długości. W danym interwale ramki znajdujące się na łączu zostają przesunięte, a każda ze stacji podejmuje decyzję, jakie działanie powinna podjąć. 
+
+W danym interwale stacje sprawdzają, czy jest możliwość wysyłania ramek - jeśli łącze w danym miejscu jest wolne, stacje z określonym prawdopodobieństwem mogą zacząć transmisję, jeśli łącze jest zajęte, stacje milczą.
+
+Możliwa jest sytuacja, gdy dwie lub więcej stacji zaczną transmisję jednocześnie. Wtedy każda ze stacji, po zauważeniu nieprawidłowych pakietów, wstrzymuje transmisję na okres czasu propagacji jednego pakietu. Po upływie tego czasu każda ze stacji losuje szczeliny czasowe zgodnie ze wzorem 
+\[   
+T = 
+     \begin{cases}
+       t * 2^k &\quad\text{, gdy }1 \leq k \leq 10\\
+       t * 2^{10} &\quad\text{, gdy }10 \leq k \leq 16\\
+     \end{cases}
+\]
+gdzie
+\begin{itemize}
+\itemsep0em
+\item $k$ - numer kolizji
+\end{itemize}
+
+
 
 
 
