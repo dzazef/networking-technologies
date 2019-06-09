@@ -33,5 +33,7 @@ if ($ARGV[0] eq 'zad1') {
                 $c->send_error(RC_FORBIDDEN)
             }
         }
+        $c->close;
+        undef($c);
     }
 }
